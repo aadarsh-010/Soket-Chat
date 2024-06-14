@@ -1,0 +1,17 @@
+{
+  "name": "soket-chat",
+  "version": "1.0.0",
+  "description": "Its a live chatting application build on mern stack using socket.io",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.3"
+  }
+}
