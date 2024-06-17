@@ -9,11 +9,13 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import fileUpload from "express-fileupload";
 import cors from "cors";
+import createHttpError from "http-errors";
+import routes from "./routes/index.js";
+
 
 //morgan
-if (process.env.NODE_ENV !== "production") {
-    app.use(morgan("dev"));
-  }
+  app.use(morgan("dev"));
+  //cross-env was used to actually run you env.mode !=DEVLOPMENT isko set krke hr device me eun krne  k lie
   
   //helmet
   app.use(helmet());
@@ -46,9 +48,23 @@ app.use(cors());
 
 
 
+//accessing routes for version 1 used this version concept as its a good practice
+app.use("/api/v1", routes);
 
-app.get("/",(req,res)=>{
-    res.send("hey there");
-});
+// HTTP error handling
+app.use(async (req, res, next) => {
+    next(createHttpError.NotFound("This route does not exist."));
+  });
+  
+  // it will show the status error status and message
+  app.use(async (err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send({
+      error: {
+        status: err.status || 500,
+        message: err.message,
+      },
+    });
+  });
 
 export default app;
