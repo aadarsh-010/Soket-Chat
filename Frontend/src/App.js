@@ -1,9 +1,42 @@
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import './App.css';
+import Home from "./pages/home.js";
+import Login from "./pages/login.js";
+import Register from "./pages/register.js";
+
 
 function App() {
   return (
     <>
+      <div className="dark">
+      
+        <Router>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={<Home  />}
+            />
+            <Route
+              exact
+              path="/login"
+              element={ <Login /> }
+            />
+            <Route
+              exact
+              path="/register"
+              element={ <Register /> }
+            />
+          </Routes>
+        </Router>
+      
+    </div>
     </>
   );
 }
