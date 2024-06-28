@@ -1,3 +1,5 @@
+
+import { useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,12 +12,14 @@ import Home from "./pages/home.js";
 import Login from "./pages/login.js";
 import Register from "./pages/register.js";
 
-
 function App() {
+
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
+  
   return (
     <>
       <div className="dark">
-      
         <Router>
           <Routes>
             <Route
