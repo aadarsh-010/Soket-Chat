@@ -12,6 +12,7 @@ export default function AuthInput({
       </label>
       <input
         className="w-full dark:bg-dark_bg_3 text-base py-2 px-4 rounded-lg outline-none"
+        autoComplete="on"
         type={type}
         placeholder={placeholder}
         {...register(name)}
