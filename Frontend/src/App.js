@@ -1,5 +1,5 @@
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,28 +14,32 @@ import Register from "./pages/register.js";
 
 function App() {
 
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  console.log(user);
+  const { token } = user;
+  
   
   return (
     <>
       <div className="dark">
-        <Router>
+      <Router>
           <Routes>
             <Route
               exact
               path="/"
-              element={<Home  />}
+              element={
+                token ? <Home  /> : <Navigate to="/login" />
+              }
             />
             <Route
               exact
               path="/login"
-              element={ <Login /> }
+              element={!token ? <Login /> : <Navigate to="/" />}
             />
             <Route
               exact
               path="/register"
-              element={ <Register /> }
+              element={!token ? <Register /> : <Navigate to="/" />}
             />
           </Routes>
         </Router>
