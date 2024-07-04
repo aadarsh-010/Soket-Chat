@@ -13,37 +13,19 @@ import createHttpError from "http-errors";
 import routes from "./routes/index.js";
 
 
-//morgan
   app.use(morgan("dev"));
   //cross-env was used to actually run you env.mode !=DEVLOPMENT isko set krke hr device me eun krne  k lie
-  
-  //helmet
   app.use(helmet());
-  
-  //parse json request url
   app.use(express.json());
-  
-  //parse json request body
   app.use(express.urlencoded({ extended: true }));
-  
-  //sanitize request data
   app.use(mongoSanitize());
-  
-  //enable cookie parser
   app.use(cookieParser());
-
-
-  //gzip compression
 app.use(compression());
-
-//file upload
 app.use(
   fileUpload({
     useTempFiles: true,
   })
 );
-
-//cors
 app.use(cors());
 
 
@@ -56,7 +38,6 @@ app.use(async (req, res, next) => {
     next(createHttpError.NotFound("This route does not exist."));
   });
   
-  // it will show the status error status and message
   app.use(async (err, req, res, next) => {
     res.status(err.status || 500);
     res.send({
