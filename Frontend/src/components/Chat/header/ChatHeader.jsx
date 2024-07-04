@@ -13,7 +13,7 @@ import {
   getConversationName,
   getConversationPicture,
 } from "../../../utils/chat";
-function ChatHeader({ online, callUser, socket }) {
+function ChatHeader({ online, socket }) {
   const { activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
 
@@ -54,7 +54,7 @@ function ChatHeader({ online, callUser, socket }) {
         {/*Right*/}
         <ul className="flex items-center gap-x-2.5">
           {1 == 1 ? (
-            <li onClick={() => callUser()}>
+            <li>
               <button className="btn">
                 <VideoCallIcon />
               </button>
