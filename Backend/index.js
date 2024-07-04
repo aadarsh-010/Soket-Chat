@@ -1,8 +1,9 @@
+import mongoose from "mongoose";
+import { Server } from "socket.io";
 import app from "./src/app.js";
 import logger from "./src/configs/logger.config.js";
 import "./src/configs/connection.js";
-
-
+import SocketServer from "./SocketServer.js";
 
 // console.log(process.env.PORT)
 const PORT = process.env.PORT ;
@@ -14,7 +15,17 @@ server = app.listen(PORT, () => {
 //   throw new Error("afsaf");
 });
 
-
+//socket io
+const io = new Server(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: process.env.CLIENT_ENDPOINT,
+  },
+});
+io.on("connection", (socket) => {
+  logger.info("socket io connected successfully.");
+  SocketServer(socket, io);
+});
 
 //handle server errors
 const exitHandler = () => {

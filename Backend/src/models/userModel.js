@@ -40,23 +40,20 @@ const userSchema = mongoose.Schema(
   {
     collection: "users",
     timestamps: true,
-    // isko add krne se what happen is   Mongoose will add two properties of type Date to your schema:
-    // createdAt: a date representing when this document was created
-    // updatedAt: a date representing when this document was last updated
   }
 );
 userSchema.pre("save", async function (next) {
-    try {
-      if (this.isNew) {
-        const salt = await bcrypt.genSalt(12);
-        const hashedPassword = await bcrypt.hash(this.password, salt);
-        this.password = hashedPassword;
-      }
-      next();
-    } catch (error) {
-      next(error);
+  try {
+    if (this.isNew) {
+      const salt = await bcrypt.genSalt(12);
+      const hashedPassword = await bcrypt.hash(this.password, salt);
+      this.password = hashedPassword;
     }
-  });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 const UserModel =
   mongoose.models.UserModel || mongoose.model("UserModel", userSchema);
 

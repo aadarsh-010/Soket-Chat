@@ -1,4 +1,5 @@
 import express from "express";
+import trimRequest from "trim-request";
 import {
   login,
   logout,
@@ -7,10 +8,9 @@ import {
 } from "../controllers/auth.controller.js";
 const router = express.Router();
 
-router.route("/register").post(register);
-router.route("/login").post(login);
-router.route("/logout").post(logout);
-router.route("/refreshtoken").post(refreshToken);
+router.route("/register").post(trimRequest.all, register);
+router.route("/login").post(trimRequest.all, login);
+router.route("/logout").post(trimRequest.all, logout);
+router.route("/refreshtoken").post(trimRequest.all, refreshToken);
 
 export default router;
-

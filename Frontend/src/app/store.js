@@ -2,12 +2,14 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import createFilter from "redux-persist-transform-filter";
 import storage from "redux-persist/lib/storage";
+//slices
 import userSlice from "../features/userSlice";
+import chatSlice from "../features/chatSlice";
 
-
+//saveUserOnlyFilter
 const saveUserOnlyFilter = createFilter("user", ["user"]);
 
-//user persist defining only this user thing would be persisted , whitelist is things you want to persisit and there is also a blacklist which is used for things you not want to persist
+//persist config
 const persistConfig = {
   key: "user",
   storage,
@@ -17,13 +19,12 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userSlice,
-  
+  chat: chatSlice,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-//   middlewares mangta hi hai configurestore if nhi do to apne se default middlewares set kr deta hai ye code likh k apn middleware apne mn ka add kr skte hai to bs add kia hai uska ek middleware serializability check false , to ab kya hoga only this middleware would be includeed nothing else ;
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

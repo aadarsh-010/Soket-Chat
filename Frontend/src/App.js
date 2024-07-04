@@ -1,4 +1,4 @@
-
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
@@ -6,29 +6,31 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
-import './App.css';
-import Home from "./pages/home.js";
-import Login from "./pages/login.js";
-import Register from "./pages/register.js";
+import { io } from "socket.io-client";
+import SocketContext from "./context/SocketContext";
+//Pages
+import Home from "./pages/home";
+import Login from "./pages/login";
+import Register from "./pages/register";
+//socket io
+const socket = io(process.env.REACT_APP_API_ENDPOINT.split("/api/v1")[0]);
 
 function App() {
-
+  //const [connected, setConnected] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { token } = user;
-  
-  
+
   return (
-    <>
-      <div className="dark">
-      <Router>
+    <div className="dark">
+      <SocketContext.Provider value={socket}>
+        <Router>
           <Routes>
             <Route
               exact
               path="/"
               element={
-                token ? <Home  /> : <Navigate to="/login" />
+                token ? <Home socket={socket} /> : <Navigate to="/login" />
               }
             />
             <Route
@@ -43,9 +45,8 @@ function App() {
             />
           </Routes>
         </Router>
-      
+      </SocketContext.Provider>
     </div>
-    </>
   );
 }
 
